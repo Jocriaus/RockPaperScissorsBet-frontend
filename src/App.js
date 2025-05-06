@@ -41,47 +41,61 @@ function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-100 text-gray-800 p-6">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold mb-4 text-center">🪨📄✂️ Rock Paper Scissors DApp</h1>
-        {account && (
-          <p className="text-center mb-6 text-sm text-gray-600">
-            Connected Account: <span className="font-mono">{account}</span>
-          </p>
-        )}
+    <div className="min-h-screen bg-gradient-to-br from-indigo-100 to-white text-gray-800">
+      {/* Header */}
+      <header className="bg-indigo-600 text-white py-4 shadow-md">
+        <div className="max-w-4xl mx-auto text-center">
+          <h1 className="text-3xl font-bold">🪨📄✂️ Rock Paper Scissors DApp</h1>
+          {account && (
+            <p className="text-sm mt-1">
+              Connected Wallet: <span className="font-mono text-yellow-200">{account}</span>
+            </p>
+          )}
+        </div>
+      </header>
 
+      {/* Main App Container */}
+      <main className="max-w-4xl mx-auto px-4 py-10 space-y-6">
         {contract ? (
-          <div className="space-y-8">
-            <div className="bg-white shadow-md rounded-xl p-6">
+          <>
+            <Section title="1. Start Game">
               <StartGame contract={contract} account={account} />
-            </div>
+            </Section>
 
-            <div className="bg-white shadow-md rounded-xl p-6">
+            <Section title="2. Join Game">
               <JoinGame contract={contract} account={account} />
-            </div>
+            </Section>
 
-            <div className="bg-white shadow-md rounded-xl p-6">
+            <Section title="3. Send Bet">
               <SendBet contract={contract} account={account} />
-            </div>
+            </Section>
 
-            <div className="bg-white shadow-md rounded-xl p-6">
+            <Section title="4. Reveal Move">
               <RevealMove contract={contract} account={account} />
-            </div>
+            </Section>
 
-            <div className="bg-white shadow-md rounded-xl p-6">
+            <Section title="5. Abort Game (Timeout)">
               <AbortGame contract={contract} account={account} />
-            </div>
+            </Section>
 
-            <div className="bg-white shadow-md rounded-xl p-6">
+            <Section title="6. Game Status Viewer">
               <GameStatusViewer contract={contract} />
-            </div>
-          </div>
+            </Section>
+          </>
         ) : (
-          <p className="text-center text-lg text-red-500">Loading Web3 and Contract...</p>
+          <div className="text-center text-lg text-red-500 mt-10">Loading Web3 and Contract...</div>
         )}
-      </div>
+      </main>
     </div>
   );
 }
+
+// Reusable Section component for clean layout
+const Section = ({ title, children }) => (
+  <div className="bg-white rounded-2xl shadow p-6">
+    <h2 className="text-xl font-semibold mb-4 text-indigo-700">{title}</h2>
+    {children}
+  </div>
+);
 
 export default App;
